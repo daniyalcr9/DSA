@@ -1,0 +1,8 @@
+public interface Collection {
+    public boolean add(Object obj);
+    public void clear();
+    public boolean isEmpty();
+    public Iterator iterator();
+    public int size();
+    public boolean remove(Object obj);
+}
