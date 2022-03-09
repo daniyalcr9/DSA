@@ -1,0 +1,52 @@
+public class ArrayCollection extends AbstarctCollection{
+    private final int length_I = 4;
+    private int size;
+    private Object[] a = new Object[length_I];
+    public int size(){
+        return size;
+    }
+    public boolean add(Object obj){
+        if(size == a.length){
+            resize();
+        }
+        a[size++] = obj;
+        return true;
+    }
+
+    private Object[] resize() {
+        Object[] a2 = new Object[2*size];
+        System.arraycopy(a, 0, a2, 0, size);
+        return a2;
+    }
+
+    @Override
+    public Iterator iterator(){
+        return new Iterator() {
+            private int i = 0;
+            private boolean okToRemove = false;
+            @Override
+            public boolean hasNext() {
+                return (i < size);
+            }
+
+            @Override
+            public Object next() {
+                if (i == size) {
+                    throw new RuntimeException();
+                }
+                okToRemove = true;
+                return a[i++];
+            }
+
+            @Override
+            public void remove() {
+                if(okToRemove = false){
+                    throw new IllegalStateException();
+                }
+                a[--i] = a[--size];
+                a[size]=null;
+                okToRemove = false;
+            }
+        };
+    }
+}
