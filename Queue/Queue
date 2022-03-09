@@ -1,0 +1,10 @@
+public interface Queue {
+    public void add(Object obj);
+    public Object firstele();
+    public Object remove();
+    public int size();
+    public void display();
+    public void removeBottomElement();
+    public void reverse();
+    public String toString();
+}
