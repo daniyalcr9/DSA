@@ -1,0 +1,93 @@
+public class LinkedlistCollection extends AbstarctCollection{
+    public static class Node{
+        Object obj;
+        Node prev,next;
+        Node(){
+            prev=next=this;
+        }
+        Node(Object obj, Node prev, Node next) {
+            this.obj = obj;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+
+    public void display(){
+        Node current = head.next;
+        if(current==null){
+            System.out.println("Queue is empty");
+        }
+        else{
+            while (current.obj!=null){
+                System.out.println(current.obj + " ");
+                current = current.next;
+            }
+        }
+    }
+
+    private int size;
+    private Node head = new Node();
+
+    public boolean add(Object obj){
+        head.prev = head.prev.next = new Node(obj,head.prev,head);
+        size++;
+        return true;
+    }
+
+    @Override
+    public int size(){
+        return size;
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new Iterator() {
+            private Node cursor = head.next;
+            private boolean okToRemove = false;
+
+            @Override
+            public boolean hasNext() {
+                return cursor!=head;
+            }
+
+            @Override
+            public Object next() {
+                if (cursor == head) {
+                    throw new RuntimeException();
+                }
+                okToRemove = true;
+                Object obj = cursor.obj;
+                cursor = cursor.next;
+                return obj;
+            }
+
+            @Override
+            public void remove() {
+                if(okToRemove = false){
+                    throw new IllegalStateException();
+                }
+                cursor.prev = cursor.prev.prev;
+                cursor.prev.next = cursor;
+                size--;
+                okToRemove = false;
+            }
+        };
+    }
+
+    public static void main(String[] args) {
+        LinkedlistCollection l1 = new LinkedlistCollection();
+        l1.add(10);
+        l1.add(11);
+        l1.add(12);
+        l1.add(13);
+        l1.add(14);
+        //l1.display();
+        Iterator it = l1.iterator();
+        it.next();
+        it.next();
+        it.next();
+        it.remove();
+        System.out.println(l1.toString());
+
+    }
+}
