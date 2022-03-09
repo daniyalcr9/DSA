@@ -1,0 +1,259 @@
+import javax.swing.event.ListDataEvent;
+import java.util.List;
+
+public class SinglyLinkLists {//main class starts
+    //holds linked list for us
+    private ListNode head;
+
+    //public class
+    private static class ListNode {// class starts
+        private int data;
+        private ListNode next;
+
+        //constructor ListNode
+        public ListNode(int data){//initializing constructor
+            this.data = data;
+            this.next = next;
+        }//constructor ends
+    }//class ends
+
+    //display function which will display the data entered in nodes
+    public void display(){//display function starts
+        ListNode current = head;
+        while(current != null){//while loop starts
+            System.out.print(current.data + " --> ");
+            current = current.next;
+        }//while loop ends
+        System.out.println("null");
+    }//display function ends
+
+    //length function which will tell the length of LinkList
+    public int length() {
+        if(head == null) {
+            return 0;
+        }
+        int count = 0;
+        ListNode current = head;
+        while(current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }//length function ends
+
+    //inserting new node in start of linklist
+    public void insertfirst(int value){
+        ListNode newNode = new ListNode(value);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    //inserting new node in the end of linklist
+    public void InsertLast(int value){
+        ListNode newNode = new ListNode(value);
+        if (head == null){
+            head = newNode;
+            return;
+        }
+        ListNode current = head;
+        while(null != current.next){
+            current = current.next;
+        }
+        current .next = newNode;
+    }
+
+    //inserting new node at given position of linklist
+    public void Insert(int position , int value){
+        ListNode newNode = new ListNode(value);
+
+        if (position == 1){
+            newNode.next = head;
+            head = newNode;
+        }
+        else{
+            ListNode previous = head;
+            int count = 1;
+
+            while (count < position - 1){
+                previous.next = newNode;
+                count++;
+            }
+
+            ListNode current = previous.next;
+            previous.next = newNode;
+            newNode.next = current;
+        }
+    }
+
+    //deleting starting node  of linklist
+    public ListNode DeleteFirst(){
+        if (head == null){
+            return null;
+        }
+        ListNode temp = head;
+        head = head.next;
+
+        return temp;
+    }
+
+    //deleting Last node  of linklist
+    public ListNode DeleteLast (){
+        if(head == null) {
+            return head;
+        }
+
+        if(head.next == null) {
+            ListNode temp = head;
+            head = head.next;
+            return temp;
+        }
+        ListNode current  = head;
+        ListNode previous = null;
+
+        while(current.next != null){
+            previous = current;
+            current = current.next;
+        }
+        previous.next = null;
+        return current;
+    }
+
+    //deleting node at given position in linklist
+    public void delete (int position){
+        if (position == 1){
+            head = head.next;
+        }
+        else{
+            ListNode previous = head;
+            int count = 1;
+            while(count < position - 1){
+                previous = previous.next;
+                count++;
+            }
+            ListNode current = previous.next;
+            previous.next = current.next;
+        }
+    }
+
+    public boolean find(int searchKey) {
+        if(head == null) {
+            return false;
+        }
+
+        ListNode current = head;
+        while(current != null) {
+            if(current.data == searchKey) {
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
+    //inserting node in sorted linklist
+    public ListNode SortedNode(int value){
+        ListNode newNode = new ListNode(value);
+
+        if (head == null){
+            return newNode;
+        }
+
+        ListNode current = head;
+        ListNode temp = null;
+
+        while(current != null && current.data < newNode.data){
+            temp = current;
+            current = current.next;
+        }
+        newNode.next = current;
+        temp.next = newNode;
+        return head;
+    }
+
+    public void duplicate(){
+        if (head == null){
+            return;
+        }
+        ListNode current = head;
+        while(current != null && current.next != null){
+            if(current.data == current.next.data){
+                current.next = current.next.next;
+            }else{
+                current = current.next;
+            }
+        }
+    }
+
+    // reverse
+
+
+    public ListNode reverse(ListNode node) {
+        if(node==null){
+        return node;}
+
+        ListNode current=node;
+        ListNode pervious = null;
+        ListNode next = null;
+        while (current!=null){
+            next=current.next;
+            current.next=pervious;
+            pervious=current;
+            current=next;
+        }
+        return  pervious;
+    }
+
+    //main function
+    public static void main(String[] args) {//main starts
+        SinglyLinkLists sll = new SinglyLinkLists();
+       sll.head = new ListNode(1);
+        ListNode second = new ListNode(3);
+        ListNode third = new ListNode(5);
+        ListNode forth = new ListNode(7);
+
+       // now we will connect them together to form a chain
+        sll.head.next = second;// 1 --> 18
+        second.next = third;// 1 --> 18 --> 4
+        third.next = forth;// 1 --> 18 --> 4 --> 20 --> null
+
+        // insert first
+       // sll.insertfirst(56);
+        //sll.insertfirst(45);
+
+        // insert last
+      //   sll.InsertLast(9881);
+
+        //insert
+       // sll.Insert(2,3);
+
+        //calling display function
+        sll.display();
+
+        //calling deletefirst function
+      // System.out.println(sll.DeleteFirst().data);
+
+        //calling deletelast function
+        //System.out.println(sll.DeleteLast().data);
+        //calling searchKey function
+       // System.out.println(sll.find(18));
+
+        //calling delete function
+        //sll.delete(3);
+        //sll.display();
+
+        //calling duplicate function
+        //sll+.duplicate();
+
+        //calling reverse function
+       // sll.reverse(node);
+
+        //calling SortedNode function
+      //  sll.SortedNode(2);
+       // sll.display();
+       // System.out.println();
+
+        //calling length function
+        //System.out.println("The Length of linked list is : " + sll.length());
+    }
+
+    }
