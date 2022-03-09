@@ -1,0 +1,165 @@
+import java.util.NoSuchElementException;
+
+public class LinkedQueue implements Queue{
+    private Node head = new Node(null);
+    private int size;
+
+    //inner class
+    private static class Node{
+        Object obj;
+        Node prev=this, next=this;
+
+        //constructor
+        Node(Object o){
+            obj=o;
+        }
+
+        Node(Object o, Node n, Node p){
+            obj=o;
+            next=n;
+            prev=p;
+        }
+    }
+
+    @Override
+    public void add(Object obj) {
+        head.prev=head.prev.next = new Node(obj,head,head.prev);
+        size++;
+    }
+
+    @Override
+    public Object firstele() {
+        return head.next.obj;
+    }
+
+    @Override
+    public Object remove() {
+        if(size==0){
+            throw new NoSuchElementException();
+        }
+        Object temp = head.next.obj;
+        head.next = head.next.next;
+        head.next.prev=head;
+        --size;
+        return temp;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public void display(){
+        Node current = head.next;
+        if(head==null){
+            System.out.println("Queue is empty");
+        }
+        else{
+            while (current.obj!=null){
+                System.out.println(current.obj + " ");
+                current = current.next;
+            }
+        }
+    }
+
+    @Override
+    public void removeBottomElement(){
+        head.prev = head.prev.prev;
+        head.prev.next=head;
+        --size;
+    }
+
+    @Override
+    public void reverse(){
+        Node current = head.prev;
+        if(head==null){
+            System.out.println("Queue is empty");
+        }
+        else{
+            while (current.obj!=null){
+                System.out.println(current.obj + " ");
+                current = current.prev;
+            }
+        }
+    }
+
+    public String toString(){
+        String temp="";
+        Node current = head.next;
+        if(head==null){
+            System.out.println("Queue is empty");
+        }
+        else{
+            while (current.obj!=null){
+                temp += current.obj +" ";
+                current = current.next;
+            }
+        }
+        return temp;
+    }
+
+    public void clone(LinkedQueue q){
+        Node current = q.head.next;
+        while (current.obj!=null){
+            this.add(current.obj);
+            current = current.next;
+        }
+    }
+    
+    public void equal(LinkedQueue q){
+        if(this.size()!=q.size()){
+            System.out.println("Both are not equal");
+            return;
+        }
+        else{
+            Node curent1= this.head.next;
+            Node current2 = q.head.next;
+            while (curent1.obj!=null){
+                if(curent1.obj != current2.obj){
+                    System.out.println("Both are not equal");
+                    return;
+                };
+                curent1=curent1.next;
+                current2=current2.next;
+            }
+        }
+        System.out.println("Both are equal");
+    }
+
+    public static void main(String[] args) {
+        LinkedQueue q1 = new LinkedQueue();
+        q1.add(12);
+        q1.add(13);
+        q1.add(14);
+        q1.add(15);
+        q1.add(16);
+
+        LinkedQueue q2 = new LinkedQueue();
+        q2.add(1);
+        q2.add(2);
+        q2.add(3);
+        q2.add(4);
+        q2.add(5);
+        q2.add(6);
+        //q2.equal(q1);
+        //System.out.println("Before calling the function");
+        //q1.display();
+        //System.out.println("Printing in by using tostring method order");
+        //q1.reverse();
+        //System.out.println(q1.toString());
+        /*q1.removeBottomElement();
+        System.out.println("After calling the function");
+        q1.display();
+
+
+        /*LinkedQueue q2 = new LinkedQueue();
+        q2.clone(q1);
+        System.out.println("Displaying second queue");
+        q2.display();
+        q1.removeBottomElement();
+        System.out.println("After calling the function");
+        q1.display();
+        System.out.println("Displaying second queue");
+        q2.display();*/
+    }
